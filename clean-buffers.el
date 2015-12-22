@@ -39,8 +39,10 @@
 ;; or `cb-turn-on-auto-clean-buffers' to clean useless buffers automatically
 
 ;;; Code:
+(require 'cl-lib)
+
 (defun cb--buffer-active-p(buffer)
-  "is the `BUFFER' already show in some window"
+  "is the BUFFER already show in some window"
   (get-buffer-window buffer t))
 
 (defun cb--buffer-process-holding-p (buffer)
@@ -90,7 +92,7 @@ the expire time is determined by `cb-useless-buffer-time-out'"
 
 (defun cb-judge-useless-buffer-by-name (buffer)
   ""
-  (some (lambda (reg) (string-match reg buffer)) cb-useless-buffer-names))
+  (cl-some (lambda (reg) (string-match reg buffer)) cb-useless-buffer-names))
 
 (defcustom cb-useful-buffer-names 
 	'("*Tree*")
@@ -102,8 +104,8 @@ the expire time is determined by `cb-useless-buffer-time-out'"
   "use functions in `cb-judge-useless-buffer-functions' to determine the BUFFER is a useless buffer or not"
   (when (bufferp buffer)
 	(setq buffer (buffer-name buffer)))
-  (and (not (some (lambda (reg) (string-match reg buffer)) cb-useful-buffer-names))
-	   (some (lambda (fn) (funcall fn buffer)) cb-judge-useless-buffer-functions)))
+  (and (not (cl-some (lambda (reg) (string-match reg buffer)) cb-useful-buffer-names))
+	   (cl-some (lambda (fn) (funcall fn buffer)) cb-judge-useless-buffer-functions)))
 
 (defun cb--kill-useless-buffer(buffer &optional kill-active kill-process-holding)
   "kill the BUFFER if the BUFFER is a useless buffer"
