@@ -40,43 +40,43 @@
 
 ;;; Code:
 (defun cb--buffer-active-p(buffer)
-  "判断buffer是否有在某个window中显示"
+  "is the `BUFFER' already show in some window"
   (get-buffer-window buffer t))
 
 (defun cb--buffer-process-holding-p (buffer)
-  "判断buffer是否被某个process所持有"
+  "is the BUFFER holding a process"
   (get-buffer-process buffer))
 
 (defgroup clean-buffers nil
-  "定时清理无用的buffer")
+  "clean useless buffers")
 
 (defcustom cb-kill-active-buffer nil
-  "自动清理时是否清理active状态的buffer"
+  "clean active buffer or not"
   :type '(boolean)
   :group 'clean-buffers)
 
 (defcustom cb-kill-proces-holding-buffer nil
-  "自动清理时是否清理被process持有的buffer"
+  "clean process-holding buffer or not"
   :type '(boolean)
   :group 'clean-buffers)
 
 (defcustom cb-judge-useless-buffer-functions '(cb-judge-useless-buffer-by-time cb-judge-useless-buffer-by-name)
-  "用于判断buffer是否为无用buffer的函数列表
+  "function list which used to determine a buffer is useless or not 
 
-用于判断buffer的函数会接收buffer作为唯一参数,并在buffer为无用时返回非nil"
+the function will take a buffer as the only argument and should return non-nil when the buffer is a useless buffer."
 
   :group 'clean-buffers
   :type '(repeat function))
 
 (defcustom cb-useless-buffer-time-out (* 7 24 3600)
-  "cb-judge-useless-buffer-by-time中,超过该时长未显示的buffer被认为是无用的buffer,单位为秒"
+  "used in `cb-judge-useless-buffer-by-time'"
   :group 'clean-buffers
   :type '(integer))
 
 (defun cb-judge-useless-buffer-by-time (buffer)
-  "超过一定时间未显示的buffer被认为是无用的
+  "buffer which did not displayed for specify time considered to be useless
 
-超时时间由`cb-useless-buffer-time-out'决定"
+the expire time is determined by `cb-useless-buffer-time-out'"
   (let (now buffer-last-display-time)
 	(setq now (float-time (current-time)))
 	(setq buffer-last-display-time (float-time (buffer-local-value 'buffer-display-time (get-buffer buffer))))
@@ -84,7 +84,7 @@
 
 (defcustom cb-useless-buffer-names 
 	'("*Buffer List*" "*Backtrace*" "*Apropos*" "*Completions*" "*Help*" "\\.~master~" "\\*vc-dir\\*" "\\*tramp\/.+\\*"  "\\*vc-git.+\\*")
-	"无用buffer的名称列表"
+	"useless buffer list"
 	:group 'clean-buffers
 	:type '(repeat regexp))
 
@@ -94,21 +94,19 @@
 
 (defcustom cb-useful-buffer-names 
 	'("*Tree*")
-	"有用buffer的名称列表"
+	"useful buffer list"
 	:group 'clean-buffers
 	:type '(repeat regexp))
 
 (defun cb--useless-buffer-p (buffer)
-  "使用cb-judge-useless-buffer-functions中的函数判断buffer是否为无用的buffer
-
-匹配useful-buffer-name的buffer不会被清理"
+  "use functions in `cb-judge-useless-buffer-functions' to determine the BUFFER is a useless buffer or not"
   (when (bufferp buffer)
 	(setq buffer (buffer-name buffer)))
   (and (not (some (lambda (reg) (string-match reg buffer)) cb-useful-buffer-names))
 	   (some (lambda (fn) (funcall fn buffer)) cb-judge-useless-buffer-functions)))
 
 (defun cb--kill-useless-buffer(buffer &optional kill-active kill-process-holding)
-  "若buffer为无用的buffer,则kill之"
+  "kill the BUFFER if the BUFFER is a useless buffer"
   (unless (or (not (cb--useless-buffer-p buffer))
 			  (and (not kill-active) (cb--buffer-active-p buffer))
 			  (and (not kill-process-holding) (cb--buffer-process-holding-p buffer)))
@@ -116,7 +114,7 @@
 
 ;;;###autoload
 (defun cb-kill-useless-buffers()
-  "清理所有的无用buffer"
+  "clean all useless buffer"
   (interactive)
   (dolist (buffer (buffer-list))
 	(cb--kill-useless-buffer buffer cb-kill-active-buffer cb-kill-proces-holding-buffer)))
