@@ -6,6 +6,7 @@
 ;; Created: 2015-12-22
 ;; Version: 0.1
 ;; Keywords: convenience, usability, buffers
+;; Package-Requires: ((cl-lib "0.5"))
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -39,6 +40,7 @@
 ;; or `cb-turn-on-auto-clean-buffers' to clean useless buffers automatically
 
 ;;; Code:
+
 (require 'cl-lib)
 
 (defun cb--buffer-active-p(buffer)
@@ -51,7 +53,8 @@
 
 (defgroup clean-buffers nil
   "clean useless buffers"
-  :prefix "cb-")
+  :prefix "cb-"
+  :group 'convenience)
 
 (defcustom cb-kill-active-buffer nil
   "clean active buffer or not"
