@@ -79,6 +79,23 @@
   (dolist (buffer (buffer-list))
 	(cb--kill-useless-buffer buffer cb-kill-active-buffer cb-kill-proces-holding-buffer)))
 
+(defcustom cb-auto-clean-interval 10
+  "interval that  clean useless buffers"
+  :type '(integer)
+  :group 'clean-buffers)
+
+(defvar cb-auto-clean-timer nil)
+
+(defun cb-turn-off-auto-clean-buffers ()
+  (interactive)
+  (when (timerp cb-auto-clean-timer)
+    (cancel-timer cb-auto-clean-timer)))
+
+(defun cb-turn-on-auto-clean-buffers ()
+  (interactive)
+  (cb-turn-off-auto-clean-buffers)
+  (setq cb-auto-clean-timer (run-with-timer 0 cb-auto-clean-interval #'kill-useless-buffers)))
+
 (provide 'clean-buffers)
 
 
