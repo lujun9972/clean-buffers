@@ -122,7 +122,7 @@ the expire time is determined by `cb-useless-buffer-time-out'"
 	(cb--kill-useless-buffer buffer cb-kill-active-buffer cb-kill-proces-holding-buffer)))
 
 (defcustom cb-auto-clean-interval 10
-  "interval that  clean useless buffers"
+  "clean useless buffers interval"
   :type '(integer)
   :group 'clean-buffers)
 
