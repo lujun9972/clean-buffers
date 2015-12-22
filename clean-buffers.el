@@ -73,6 +73,7 @@
 			  (and (not kill-process-holding) (cb--buffer-process-holding-p buffer)))
 	(kill-buffer buffer)))
 
+;;;###autoload
 (defun cb-kill-useless-buffers()
   "清理所有的无用buffer"
   (interactive)
@@ -86,11 +87,13 @@
 
 (defvar cb-auto-clean-timer nil)
 
+;;;###autoload
 (defun cb-turn-off-auto-clean-buffers ()
   (interactive)
   (when (timerp cb-auto-clean-timer)
     (cancel-timer cb-auto-clean-timer)))
 
+;;;###autoload
 (defun cb-turn-on-auto-clean-buffers ()
   (interactive)
   (cb-turn-off-auto-clean-buffers)
