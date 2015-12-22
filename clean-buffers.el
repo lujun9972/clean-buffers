@@ -6,6 +6,7 @@
 ;; Created: 2015-12-22
 ;; Version: 0.1
 ;; Keywords: convenience, usability, buffers
+;; Package-Requires: ((cl-lib "0.5"))
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -39,6 +40,9 @@
 ;; or `cb-turn-on-auto-clean-buffers' to clean useless buffers automatically
 
 ;;; Code:
+
+(require 'cl-lib)
+
 (defun cb--buffer-active-p(buffer)
   "判断buffer是否有在某个window中显示"
   (get-buffer-window buffer t))
@@ -90,7 +94,7 @@
 
 (defun cb-judge-useless-buffer-by-name (buffer)
   ""
-  (some (lambda (reg) (string-match reg buffer)) cb-useless-buffer-names))
+  (cl-some (lambda (reg) (string-match reg buffer)) cb-useless-buffer-names))
 
 (defcustom cb-useful-buffer-names 
 	'("*Tree*")
