@@ -52,7 +52,8 @@
   (get-buffer-process buffer))
 
 (defgroup clean-buffers nil
-  "定时清理无用的buffer")
+  "定时清理无用的buffer"
+  :group 'convenience)
 
 (defcustom cb-kill-active-buffer nil
   "自动清理时是否清理active状态的buffer"
