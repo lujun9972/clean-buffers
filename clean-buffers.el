@@ -50,7 +50,8 @@
   (get-buffer-process buffer))
 
 (defgroup clean-buffers nil
-  "clean useless buffers")
+  "clean useless buffers"
+  :prefix "cb-")
 
 (defcustom cb-kill-active-buffer nil
   "clean active buffer or not"
