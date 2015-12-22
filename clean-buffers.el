@@ -1,3 +1,44 @@
+;;; clean-buffers.el --- clean useless buffers
+
+;; Copyright (C) 2004-2015 Free Software Foundation, Inc.
+
+;; Author: DarkSun <lujun9972@gmail.com>
+;; Created: 2015-12-22
+;; Version: 0.1
+;; Keywords: convenience, usability, buffers
+
+;; This file is NOT part of GNU Emacs.
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Source code
+;;
+;; clean-buffers's code can be found here:
+;;   http://github.com/lujun9972/clean-buffers
+
+;;; Commentary:
+
+;; clean-buffers is a little tool that used to clean useless buffers
+
+;; Quick start:
+
+;; config `useless-buffer-names' or `useless-buffer-time-out' and then
+;; execute the following commands:
+;; `cb-kill-useless-buffers' to clean useless buffers
+;; or `cb-turn-on-auto-clean-buffers' to clean useless buffers automatically
+
+;;; Code:
 (defun cb--buffer-active-p(buffer)
   "判断buffer是否有在某个window中显示"
   (get-buffer-window buffer t))
@@ -97,8 +138,8 @@
 (defun cb-turn-on-auto-clean-buffers ()
   (interactive)
   (cb-turn-off-auto-clean-buffers)
-  (setq cb-auto-clean-timer (run-with-timer 0 cb-auto-clean-interval #'kill-useless-buffers)))
+  (setq cb-auto-clean-timer (run-with-timer 0 cb-auto-clean-interval #'cb-kill-useless-buffers)))
 
 (provide 'clean-buffers)
 
-
+;;; clean-buffers.el ends here
