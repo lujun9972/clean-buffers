@@ -31,7 +31,7 @@
 ;;; Commentary:
 
 ;; clean-buffers is a little tool that used to clean useless buffers
-;; which means buffers match specify regex
+;; which means buffers who's name match specify regex
 ;; (see `clean-buffer-useless-buffer-names')
 ;; or undisplayed time exceeded certain time
 ;; (see `clean-buffer-useless-buffer-timeout')
@@ -61,12 +61,12 @@
   :group 'convenience)
 
 (defcustom clean-buffers-kill-active-buffer nil
-  "clean active buffer or not"
+  "If non-nil, will clean active buffer. Default to nil."
   :type '(boolean)
   :group 'clean-buffers)
 
 (defcustom clean-buffers-kill-proces-holding-buffer nil
-  "clean process-holding buffer or not"
+  "If non-nil, will clean process-holding buffer. Default to nil."
   :type '(boolean)
   :group 'clean-buffers)
 
@@ -79,7 +79,9 @@ the function will take a buffer as the only argument and should return non-nil w
   :type '(repeat function))
 
 (defcustom clean-buffers-useless-buffer-time-out (* 7 24 3600)
-  "used in `clean-buffers-judge-useless-buffer-by-time'"
+  "buffers which undisplayed time exceeded this value will be considered useless
+
+It used in `clean-buffers-judge-useless-buffer-by-time'"
   :group 'clean-buffers
   :type '(integer))
 
