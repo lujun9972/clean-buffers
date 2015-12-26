@@ -31,6 +31,10 @@
 ;;; Commentary:
 
 ;; clean-buffers is a little tool that used to clean useless buffers
+;; which means buffers match specify regex
+;; (see `clean-buffer-useless-buffer-names')
+;; or undisplayed time exceeded certain time
+;; (see `clean-buffer-useless-buffer-timeout')
 
 ;; Quick start:
 
