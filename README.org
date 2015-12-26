@@ -1,0 +1,40 @@
+#+TITLE: README
+#+AUTHOR: lujun9972
+#+CATEGORY: clean-buffers
+#+DATE: [2015-12-26 六 23:04]
+#+OPTIONS: ^:{}
+
+* what is clean-buffers
+clean-buffers is a little tool that used to clean useless buffers which means buffers match specify regex (see `clean-buffer-useless-buffer-names') or undisplayed time exceeded certain time (see `clean-buffer-useless-buffer-timeout')
+
+* How to use
+config `useless-buffer-names' or `useless-buffer-time-out' and then execute the following commands:
+`clean-buffers-kill-useless-buffers' to clean useless buffers
+or `clean-buffers-turn-on-auto-clean-buffers' to clean useless buffers automatically
+
+* Customization
++ clean-buffers-kill-active-buffer
+  
+  If no-nil, will clean active buffer. Default to nil.
+
++ clean-buffers-kill-proces-holding-buffer
+  
+  If non-nil, will clean process-holding buffer. Default to nil
+
++ clean-buffers-judge-useless-buffer-functions
+  
+  function list which used to determine a buffer is useless or not 
+
+  the function will take a buffer as the only argument and should return non-nil when the buffer is a useless buffer.
+
++ clean-buffers-useless-buffer-time-out
+  
+  buffers who's undisplayed time exceeded this value will be considered useless
+
++ clean-buffers-useless-buffer-names 
+
+  buffers who's name match one regex in this value will be considered useless.
+
++ clean-buffers-useful-buffer-names 
+  
+  buffers who's name match one regex in this value will not considered useless.
