@@ -4,6 +4,8 @@
 #+DATE: [2015-12-26 六 23:04]
 #+OPTIONS: ^:{}
 
+* NOTE
+please use =M-x clean-buffer-list= instead, which is defined in =midnight.el=
 * what is clean-buffers
 
 clean-buffers is a little tool that used to clean useless buffers which means buffers match specify regex (see `clean-buffer-useless-buffer-names') or undisplayed time exceeded certain time (see `clean-buffer-useless-buffer-timeout')
